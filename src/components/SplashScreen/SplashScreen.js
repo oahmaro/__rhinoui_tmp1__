@@ -15,7 +15,8 @@ class SplashScreen extends Component {
     borderWidth: PropTypes.number,
     borderColor: PropTypes.string,
     titleColor: PropTypes.string,
-    buttonTextColor: PropTypes.string
+    buttonTextColor: PropTypes.string,
+    onClick: PropTypes.func
   }
 
   render() {
@@ -30,16 +31,15 @@ class SplashScreen extends Component {
       borderWidth,
       borderColor,
       titleColor,
-      buttonTextColor
+      buttonTextColor,
+      onClick
     } = this.props
 
     return (
       <div style={style}>
         <img
           className={classnames({
-            [`${styles.img}`]: true,
-            [`${styles.dark}`]: theme === undefined || 'dark',
-            [`${styles.light}`]: theme === 'light'
+            [`${styles.img}`]: true
           })}
           style={{'borderRadius': `${borderRadius}px`, 'border': `${borderWidth}px solid ${borderColor}`}}
           width={size}
@@ -48,16 +48,21 @@ class SplashScreen extends Component {
           alt='splash-screen'
           draggable={false}
         />
+
         <p style={{'color': `${titleColor}`}} className={classnames({
           [`${styles.title}`]: true,
           [`${styles.dark}`]: theme === undefined || 'dark',
           [`${styles.light}`]: theme === 'light'
         })}>{title}</p>
-        <p style={{'color': `${buttonTextColor}`}} className={classnames({
-          [`${styles.buttonText}`]: true,
-          [`${styles.dark}`]: theme === undefined || 'dark',
-          [`${styles.light}`]: theme === 'light'
-        })}>{buttonText}</p>
+
+        <a
+          onClick={onClick}
+          style={{'color': `${buttonTextColor}`}}
+          className={classnames({
+            [`${styles.buttonText}`]: true,
+            [`${styles.dark}`]: theme === undefined || 'dark',
+            [`${styles.light}`]: theme === 'light'
+          })}>{buttonText}</a>
       </div>
     )
   }

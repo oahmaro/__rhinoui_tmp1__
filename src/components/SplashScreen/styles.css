@@ -15,12 +15,21 @@
     display: block;
     text-align: center;
     user-select: none;
+    cursor: pointer;
 }
 
-.dark {
-
+.title.dark {
+    color: black
 }
 
-.light {
-    
+.title.light {
+    color: black
+}
+
+.buttonText.dark {
+    color: #26aa91
+}
+
+.buttonText.light {
+    color: #26aa91
 }
