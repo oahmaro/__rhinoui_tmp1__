@@ -7,14 +7,14 @@ export default class App extends Component {
       <div>
         <SplashScreen 
           theme='dark'
-          borderRadius={15}
+          borderRadius={16}
           borderWidth={1}
           borderColor='#191919'
-          style={{'margin': 0, 'position': 'absolute', 'top': '50%', 'left': '50%', 'transform': 'translate(-50%, -50%)'}}
-          size={300}
+          center
+          size={200}
           img='https://placeimg.com/300/300/any/grayscale' 
           title='Create your first contact!' 
-          buttonText='Create new contact...'/>
+          link='Create new contact...'/>
       </div>
     )
   }

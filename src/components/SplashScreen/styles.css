@@ -7,19 +7,28 @@
 }
 
 .title {
+    display: block;
+    margin: 0;
+    margin-top: 10px;
     text-align: center;
     user-select: none;
+    font-size: 18px;
+    font-family: roboto
 }
 
 .buttonText {
     display: block;
+    margin: 0;
+    margin-top: 10px;
     text-align: center;
     user-select: none;
     cursor: pointer;
+    font-size: 14px;
+    font-family: roboto;
 }
 
 .title.dark {
-    color: black
+    color: #808080
 }
 
 .title.light {
@@ -32,4 +41,8 @@
 
 .buttonText.light {
     color: #26aa91
+}
+
+.center {
+    margin: 0 auto;
 }
