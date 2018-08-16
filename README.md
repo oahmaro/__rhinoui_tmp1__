@@ -15,12 +15,12 @@ npm install --save rhinoui
 ```jsx
 import React, { Component } from 'react'
 
-import MyComponent from 'rhinoui'
+import SplashScreen from 'rhinoui'
 
 class Example extends Component {
   render () {
     return (
-      <MyComponent />
+      <SplashScreen />
     )
   }
 }
@@ -28,4 +28,4 @@ class Example extends Component {
 
 ## License
 
-MIT © [oahmaro](https://github.com/oahmaro)
+MIT © [Osama Ahmaro](https://github.com/oahmaro)
