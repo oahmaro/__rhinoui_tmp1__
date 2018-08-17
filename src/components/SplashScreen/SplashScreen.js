@@ -50,11 +50,11 @@ function SplashScreen(props) {
         width: `${props.size}px`,
         height: `${props.size}px`,
         borderRadius: `${props.borderRadius}px`,
-        border: `${props.borderWidth}px solid`
+        border: `${props.borderWidth}px solid ${props.borderColor}`
       },
       dark: {
         background: colors.grey2,
-        borderColor: `${colors.black5}`
+        border: `${props.borderWidth}px solid ${colors.black5}`
       },
       light: {
 
@@ -81,11 +81,12 @@ function SplashScreen(props) {
     title: {
       base: {
         display: 'block',
-        margin: 0,
+        marginLeft: 0,
+        marginRight: 0,
         marginTop: `${props.titleMarginTop}px`,
         marginBottom: `${props.titleMarginBottom}px`,
         width: `${props.size}px`,
-        color: colors.white2,
+        color: props.titleColor,
         fontColor: `${props.titleColor}`,
         textAlign: 'center',
         fontSize: `${props.titleFontSize}px`,
@@ -105,7 +106,8 @@ function SplashScreen(props) {
     link: {
       base: {
         display: 'block',
-        margin: 0,
+        marginLeft: 0,
+        marginRight: 0,
         marginTop: `${props.linkMarginTop}px`,
         marginBottom: `${props.linkMarginBottom}px`,
         width: `${props.size}px`,

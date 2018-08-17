@@ -11,7 +11,8 @@ function MenuBar(props) {
         position: 'relative',
         height: `${props.height}px`,
         background: `${props.color}`,
-        borderBottom: `${props.borderWidth}px solid`,
+        borderTop: props.bottom && `${props.borderWidth}px solid`,
+        borderBottom: !props.bottom && `${props.borderWidth}px solid`,
         borderColor: `${props.borderColor}`,
         zIndex: 3
       },
@@ -58,8 +59,8 @@ MenuBar.propTypes = {
 
 MenuBar.defaultProps = {
   height: 36,
-  dark: true,
-  borderWidth: 1
+  borderWidth: 1,
+  color: 'black'
 }
 
 export default Radium(MenuBar)
