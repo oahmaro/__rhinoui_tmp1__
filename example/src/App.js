@@ -5,8 +5,8 @@ export default class App extends Component {
   render () {
     return (
       <div>
-        <MenuBar />
-        <SplashScreen center/>
+        <MenuBar  />
+        <SplashScreen dark center/>
       </div>
     )
   }

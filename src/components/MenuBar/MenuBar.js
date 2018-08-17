@@ -6,31 +6,39 @@ import Radium from 'radium'
 function MenuBar(props) {
   const styles = {
     bar: {
-      display: 'flex',
-      position: 'relative',
-      height: `${props.height}px`,
-      background: `${props.color}`,
-      borderBottom: `${props.borderWidth}px solid`,
-      borderColor: `${props.borderColor}`,
-      zIndex: 3
-    },
-    dark: {
-      background: `${colors.grey1}`,
-      borderColor: `${colors.black4}`
-    },
-    bottom: {
-      position: 'absolute',
-      bottom: 0,
-      width: '100%',
-      borderTop: `${props.borderWidth}px solid`,
-      borderColor: `${props.borderColor}`
+      base: {
+        display: 'flex',
+        position: 'relative',
+        height: `${props.height}px`,
+        background: `${props.color}`,
+        borderBottom: `${props.borderWidth}px solid`,
+        borderColor: `${props.borderColor}`,
+        zIndex: 3
+      },
+      dark: {
+        background: `${colors.grey1}`,
+        borderColor: `${colors.black4}`
+      },
+      light: {
+
+      },
+      state: {
+        bottom: {
+          position: 'absolute',
+          bottom: 0,
+          width: '100%',
+          borderTop: `${props.borderWidth}px solid`,
+          borderColor: `${props.borderColor}`
+        }
+      }
     }
   }
 
-  const theme = (props.dark && styles.dark) || (props.light && styles.light)
-  const bottom = props.bottom && styles.bottom
+  const barTheme = (props.dark && styles.bar.dark) || (props.light && styles.bar.light)
+  const barBottom = props.bottom && styles.bar.state.bottom
+
   return (
-    <div style={[props.style, styles.bar, bottom, theme]}>
+    <div style={[props.style, styles.bar.base, barBottom, barTheme]}>
       {props.children}
     </div>
   )

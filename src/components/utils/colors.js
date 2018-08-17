@@ -4,6 +4,7 @@ export const black1 = '#1D1F23'
 export const black2 = '#212326'
 export const black3 = '#26292B'
 export const black4 = '#111213'
+export const black5 = '#191919'
 
 export const grey1 = '#24292E'
 export const grey2 = '#2A2F33'
