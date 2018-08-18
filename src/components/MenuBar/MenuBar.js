@@ -1,7 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import * as colors from '../utils/colors'
+import * as colors from '../../utils/colors'
 import Radium from 'radium'
+import AppSelector from '../AppSelector'
 
 function MenuBar(props) {
   const styles = {
@@ -40,13 +41,12 @@ function MenuBar(props) {
 
   return (
     <div style={[props.style, styles.bar.base, barBottom, barTheme]}>
-      {props.children}
+      <AppSelector />
     </div>
   )
 }
 
 MenuBar.propTypes = {
-  children: PropTypes.element,
   height: PropTypes.number,
   color: PropTypes.string,
   borderColor: PropTypes.string,

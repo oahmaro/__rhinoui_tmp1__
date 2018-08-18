@@ -1,8 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Raduim from 'radium'
-import * as colors from '../utils/colors'
-import * as sizes from '../utils/sizes'
+import * as colors from '../../utils/colors'
+import * as sizes from '../../utils/sizes'
 
 function SplashScreen(props) {
   const styles = {
