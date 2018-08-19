@@ -3,8 +3,11 @@ import PropTypes from 'prop-types'
 import * as colors from '../../utils/colors'
 import Radium from 'radium'
 import AppSelector from '../AppSelector'
+import Color from 'color'
 
 function MenuBar(props) {
+  const color = Color(props.shadowColor)
+  console.log(color)
   const styles = {
     bar: {
       base: {
@@ -15,6 +18,7 @@ function MenuBar(props) {
         borderTop: props.bottom && `${props.borderWidth}px solid`,
         borderBottom: !props.bottom && `${props.borderWidth}px solid`,
         borderColor: `${props.borderColor}`,
+        boxShadow: `${props.shadowOffset.width}px ${props.shadowOffset.height}px ${props.shadowRadius}px rgba(${color.red()}, ${color.green()}, ${color.blue()}, ${color.alpha() * props.shadowOpacity})`,
         zIndex: 3
       },
       dark: {
@@ -54,13 +58,22 @@ MenuBar.propTypes = {
   light: PropTypes.bool,
   dark: PropTypes.bool,
   style: PropTypes.object,
-  bottom: PropTypes.bool
+  bottom: PropTypes.bool,
+  shadowColor: PropTypes.string,
+  shadowOffset: PropTypes.object,
+  shadowOpacity: PropTypes.number,
+  shadowRadius: PropTypes.number
 }
 
 MenuBar.defaultProps = {
   height: 36,
   borderWidth: 1,
-  color: 'black'
+  color: 'black',
+  shadowColor: 'rgb(0, 0, 0)',
+  shadowOffset: {width: 0, height: 0},
+  shadowOpacity: 1,
+  shadowRadius: 0
+
 }
 
 export default Radium(MenuBar)
