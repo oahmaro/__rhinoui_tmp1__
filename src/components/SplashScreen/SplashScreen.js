@@ -3,8 +3,10 @@ import PropTypes from 'prop-types'
 import Raduim from 'radium'
 import * as colors from '../../utils/colors'
 import * as sizes from '../../utils/sizes'
+import Color from 'color'
 
 function SplashScreen(props) {
+  const color = Color(props.shadowColor)
   const styles = {
     container: {
       base: {
@@ -29,6 +31,7 @@ function SplashScreen(props) {
       base: {
         borderColor: `${props.borderColor}`,
         borderWidth: `${props.borderWidth}px`,
+        boxShadow: `${props.shadowOffset.width}px ${props.shadowOffset.height}px ${props.shadowRadius}px rgba(${color.red()}, ${color.green()}, ${color.blue()}, ${color.alpha() * props.shadowOpacity})`,
         userSelect: 'none',
         width: `${props.size}px`
       },
@@ -50,7 +53,8 @@ function SplashScreen(props) {
         width: `${props.size}px`,
         height: `${props.size}px`,
         borderRadius: `${props.borderRadius}px`,
-        border: `${props.borderWidth}px solid ${props.borderColor}`
+        border: `${props.borderWidth}px solid ${props.borderColor}`,
+        boxShadow: `${props.shadowOffset.width}px ${props.shadowOffset.height}px ${props.shadowRadius}px rgba(${color.red()}, ${color.green()}, ${color.blue()}, ${color.alpha() * props.shadowOpacity})`,
       },
       dark: {
         background: colors.grey2,
@@ -191,7 +195,11 @@ SplashScreen.propTypes = {
   titleMarginTop: PropTypes.number,
   titleMarginBottom: PropTypes.number,
   linkMarginTop: PropTypes.number,
-  linkMarginBottom: PropTypes.number
+  linkMarginBottom: PropTypes.number,
+  shadowColor: PropTypes.string,
+  shadowOffset: PropTypes.object,
+  shadowOpacity: PropTypes.number,
+  shadowRadius: PropTypes.number
 }
 
 SplashScreen.defaultProps = {
@@ -204,7 +212,11 @@ SplashScreen.defaultProps = {
   borderWidth: 1,
   fontFamily: 'roboto',
   titleMarginTop: 10,
-  linkMarginTop: 10
+  linkMarginTop: 10,
+  shadowColor: 'rgb(0, 0, 0)',
+  shadowOffset: {width: 0, height: 0},
+  shadowOpacity: 1,
+  shadowRadius: 0
 }
 
 export default Raduim(SplashScreen)

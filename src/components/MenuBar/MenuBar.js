@@ -73,7 +73,6 @@ MenuBar.defaultProps = {
   shadowOffset: {width: 0, height: 0},
   shadowOpacity: 1,
   shadowRadius: 0
-
 }
 
 export default Radium(MenuBar)
