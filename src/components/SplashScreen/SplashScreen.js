@@ -54,7 +54,7 @@ function SplashScreen(props) {
         height: `${props.size}px`,
         borderRadius: `${props.borderRadius}px`,
         border: `${props.borderWidth}px solid ${props.borderColor}`,
-        boxShadow: `${props.shadowOffset.width}px ${props.shadowOffset.height}px ${props.shadowRadius}px rgba(${color.red()}, ${color.green()}, ${color.blue()}, ${color.alpha() * props.shadowOpacity})`,
+        boxShadow: `${props.shadowOffset.width}px ${props.shadowOffset.height}px ${props.shadowRadius}px rgba(${color.red()}, ${color.green()}, ${color.blue()}, ${color.alpha() * props.shadowOpacity})`
       },
       dark: {
         background: colors.grey2,
