@@ -61,6 +61,7 @@ class MenuBar extends Component {
           position: 'relative',
           height: `${height}px`,
           background: `${color}`,
+          boxSizing: 'border-box',
           borderTop: bottom && `${borderWidth}px solid`,
           borderBottom: !bottom && `${borderWidth}px solid`,
           borderColor: `${borderColor}`,
@@ -88,8 +89,8 @@ class MenuBar extends Component {
 
     const barTheme = (dark && styles.bar.dark) || (light && styles.bar.light)
     const barBottom = bottom && styles.bar.state.bottom
-    return (
 
+    return (
       <div style={[style, styles.bar.base, barBottom, barTheme]}>
         <AppSelector selectedApp={this.state.selectedApp} menus={data} />
       </div>
