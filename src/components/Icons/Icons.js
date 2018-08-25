@@ -3,26 +3,23 @@ import PropTypes from 'prop-types'
 import Raduim from 'radium'
 import { data } from '../../utils/icons'
 
-function Icons (props) {
+function Icons ({ size, color, style, icon }) {
   const styles = {
     svg: {
       display: 'block',
       boxSizing: 'border-box',
-      width: `${props.size}px`,
-      height: `${props.size}px`,
-      padding: `${props.size / (props.size / 10)}px`
+      width: `${size}px`,
+      padding: `${size / (size / 10)}px`
     },
     path: {
-      fill: props.color
+      fill: color
     }
   }
 
   return (
     <svg
-      style={[styles.svg]} viewBox='0 0 512 512'
-      width={`${props.size}px`}
-      height={`${props.size}px`}>
-      <path style={styles.path} d={data[props.icon]} />
+      style={[style, styles.svg]} viewBox='0 0 512 512'>
+      <path style={styles.path} d={data[icon]} />
     </svg>
   )
 }
@@ -30,7 +27,8 @@ function Icons (props) {
 Icons.propTypes = {
   icon: PropTypes.string,
   size: PropTypes.number,
-  color: PropTypes.string
+  color: PropTypes.string,
+  style: PropTypes.object
 }
 
 Icons.defaultProps = {
