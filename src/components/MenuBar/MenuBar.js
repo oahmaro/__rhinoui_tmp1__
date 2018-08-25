@@ -4,6 +4,7 @@ import * as colors from '../../utils/colors'
 import Radium from 'radium'
 import AppSelector from '../AppSelector'
 import Color from 'color'
+import Avatar from '../Avatar'
 
 class MenuBar extends Component {
   // Temp state for testing
@@ -17,10 +18,9 @@ class MenuBar extends Component {
     workspaceColor: PropTypes.string,
     borderColor: PropTypes.string,
     borderWidth: PropTypes.number,
-    light: PropTypes.bool,
-    dark: PropTypes.bool,
+    theme: PropTypes.string,
     style: PropTypes.object,
-    bottom: PropTypes.bool,
+    position: PropTypes.string,
     shadowColor: PropTypes.string,
     shadowOffset: PropTypes.object,
     shadowOpacity: PropTypes.number,
@@ -31,12 +31,12 @@ class MenuBar extends Component {
   static defaultProps = {
     height: 36,
     borderWidth: 1,
-    mainColor: 'black',
-    workspaceColor: 'black',
     shadowColor: 'rgb(0, 0, 0)',
     shadowOffset: {width: 0, height: 0},
     shadowOpacity: 1,
-    shadowRadius: 0
+    shadowRadius: 0,
+    position: 'top',
+    theme: 'dark'
   }
 
   render() {
@@ -44,15 +44,15 @@ class MenuBar extends Component {
       shadowColor,
       shadowOffset,
       shadowRadius,
-      height, bottom,
+      height,
       borderWidth,
       borderColor,
       shadowOpacity,
-      dark,
-      light,
+      theme,
       style,
       mainColor,
       workspaceColor,
+      position,
       data
     } = this.props
 
@@ -80,21 +80,22 @@ class MenuBar extends Component {
       mainPanel: {
         base: {
           display: 'flex',
+          justifyContent: 'space-between',
           height: `${height}px`,
-          background: `${mainColor}`,
-          boxSizing: 'border-box',
-          borderTop: bottom && `${borderWidth}px solid`,
-          borderBottom: !bottom && `${borderWidth}px solid`,
-          borderColor: `${borderColor}`
+          boxSizing: 'border-box'
         },
         dark: {
-          background: `${colors.grey1}`,
-          borderColor: `${colors.black4}`
+          background: mainColor ? `${mainColor}` : `${colors.grey1}`,
+          borderColor: borderColor ? `${borderColor}` : `${colors.black4}`
         },
         state: {
+          top: {
+            borderTop: '0px solid',
+            borderBottom: `${borderWidth}px solid`
+          },
           bottom: {
             borderTop: `${borderWidth}px solid`,
-            borderColor: `${borderColor}`
+            borderBottom: '0px solid'
           }
         }
       },
@@ -103,19 +104,20 @@ class MenuBar extends Component {
           display: 'flex',
           height: '36px',
           background: `${workspaceColor}`,
-          boxSizing: 'border-box',
-          borderTop: bottom && `${borderWidth}px solid`,
-          borderBottom: !bottom && `${borderWidth}px solid`,
-          borderColor: `${borderColor}`
+          boxSizing: 'border-box'
         },
         dark: {
-          background: `${colors.black2}`,
-          borderColor: `${colors.black4}`
+          background: workspaceColor ? `${workspaceColor}` : `${colors.black2}`,
+          borderColor: borderColor ? `${borderColor}` : `${colors.black4}`
         },
         state: {
+          top: {
+            borderTop: '0px solid',
+            borderBottom: `${borderWidth}px solid`
+          },
           bottom: {
             borderTop: `${borderWidth}px solid`,
-            borderColor: `${borderColor}`
+            borderBottom: '0px solid'
           }
         }
       }
@@ -123,14 +125,15 @@ class MenuBar extends Component {
 
     const { container, mainPanel, workspacePanel } = styles
 
-    const styledContainer = [style, container.base, (bottom && container.state.bottom)]
-    const styledMainPanel = [mainPanel.base, ((dark && mainPanel.dark) || (light && mainPanel.light)), (bottom && mainPanel.state.bottom)]
-    const styledWorkspacePanel = [workspacePanel.base, ((dark && workspacePanel.dark) || (light && workspacePanel.light)), (bottom && workspacePanel.state.bottom)]
+    const styledContainer = [style, container.base, ((position === 'top' && container.state.top) || (position === 'bottom' && container.state.bottom))]
+    const styledMainPanel = [mainPanel.base, ((position === 'top' && mainPanel.state.top) || (position === 'bottom' && mainPanel.state.bottom)), ((theme === 'dark' && mainPanel.dark) || (theme === 'light' && mainPanel.light))]
+    const styledWorkspacePanel = [workspacePanel.base, ((position === 'top' && workspacePanel.state.top) || (position === 'bottom' && workspacePanel.state.bottom)), ((theme === 'dark' && workspacePanel.dark) || (theme === 'light' && workspacePanel.light))]
 
     return (
       <div style={styledContainer}>
         <div style={styledMainPanel}>
           <AppSelector selectedApp={this.state.selectedApp} menus={data} />
+          <Avatar />
         </div>
         <div style={styledWorkspacePanel}><p /></div>
       </div>

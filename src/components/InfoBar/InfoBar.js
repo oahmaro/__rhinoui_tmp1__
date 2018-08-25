@@ -10,8 +10,7 @@ class InfoBar extends Component {
     color: PropTypes.string,
     borderColor: PropTypes.string,
     borderWidth: PropTypes.number,
-    light: PropTypes.bool,
-    dark: PropTypes.bool,
+    theme: PropTypes.string,
     style: PropTypes.object,
     shadowColor: PropTypes.string,
     shadowOffset: PropTypes.object,
@@ -23,12 +22,12 @@ class InfoBar extends Component {
   static defaultProps = {
     height: 32,
     borderWidth: 1,
-    color: 'black',
     shadowColor: 'rgb(0, 0, 0)',
     shadowOffset: {width: 0, height: 0},
     shadowOpacity: 1,
     shadowRadius: 0,
-    position: 'bottom'
+    position: 'bottom',
+    theme: 'dark'
   }
 
   render() {
@@ -42,8 +41,7 @@ class InfoBar extends Component {
       borderWidth,
       borderColor,
       shadowOpacity,
-      dark,
-      light,
+      theme,
       style
     } = this.props
 
@@ -55,15 +53,13 @@ class InfoBar extends Component {
           display: 'flex',
           position: 'relative',
           height: `${height}px`,
-          background: `${color}`,
           boxSizing: 'border-box',
-          borderColor: `${borderColor}`,
           boxShadow: `${shadowOffset.width}px ${shadowOffset.height}px ${shadowRadius}px rgba(${colorF.red()}, ${colorF.green()}, ${colorF.blue()}, ${colorF.alpha() * shadowOpacity})`,
           zIndex: 3
         },
         dark: {
-          background: `${colors.black2}`,
-          borderColor: `${colors.black4}`
+          background: color ? `${color}` : `${colors.black2}`,
+          borderColor: borderColor ? `${borderColor}` : `${colors.black4}`
         },
         state: {
           top: {
@@ -85,7 +81,7 @@ class InfoBar extends Component {
     }
 
     const { bar } = styles
-    const styledBar = [style, bar.base, ((dark && bar.dark) || (light && bar.light)), ((position === 'bottom' && bar.state.bottom) || (position === 'top' && bar.state.top))]
+    const styledBar = [style, bar.base, ((position === 'bottom' && bar.state.bottom) || (position === 'top' && bar.state.top)), ((theme === 'dark' && bar.dark) || (theme === 'light' && bar.light))]
 
     return (
       <div style={styledBar}><p /></div>
