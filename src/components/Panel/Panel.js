@@ -23,8 +23,11 @@ const Panel = ({
       {
         (value) => {
           if (value) {
-            const { ui } = value.colors
-            const theme = { background: color ? `${color}` : ui.fill6 }
+            const { colors, language } = value
+            const theme = {
+              background: color ? `${color}` : colors.ui.fill6,
+              flexDirection: language.direction === 'ltr' ? 'row' : 'row-reverse'
+            }
             const styledPanel = [styles.bar, theme, style]
             return (
               <div style={styledPanel}>
