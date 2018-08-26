@@ -1,5 +1,6 @@
 export { default as SplashScreen } from './SplashScreen'
-export { default as MenuBar } from './MenuBar'
-export { default as InfoBar } from './InfoBar'
+export { default as Panel } from './Panel'
 export { default as AppSelector } from './AppSelector'
 export { default as Icons } from './Icons'
+export { default as Avatar } from './Avatar'
+export { default as Theme } from './Theme'

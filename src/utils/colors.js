@@ -26,10 +26,10 @@ export const colors = {
   },
   light: {
     text: {
-      primary: '',
-      secondary: '',
-      disabled: '',
-      other: ''
+      primary: 'black',
+      secondary: 'black',
+      disabled: 'black',
+      other: 'black'
     },
     state: {
       key: '',
@@ -38,15 +38,15 @@ export const colors = {
       error: ''
     },
     ui: {
-      fill1: '',
-      fill2: '',
-      fill3: '',
-      fill4: '',
-      fill5: '',
-      fill6: '',
-      fill7: '',
-      fill8: '',
-      fill9: ''
+      fill1: 'white',
+      fill2: 'white',
+      fill3: 'white',
+      fill4: 'white',
+      fill5: 'white',
+      fill6: 'white',
+      fill7: 'white',
+      fill8: 'white',
+      fill9: 'white'
     }
   }
 }
