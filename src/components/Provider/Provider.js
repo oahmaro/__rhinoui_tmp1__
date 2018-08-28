@@ -51,6 +51,12 @@ class Provider extends Component {
   }
 
   render() {
+    const ID = () => '_' + Math.random().toString(36).substr(2, 9)
+    const childrenWithKey = React.Children.map(this.props.children, child => {
+      return React.cloneElement(child, {
+        key: ID()
+      })
+    })
     return (
       <ThemeContext.Provider value={{
         theme: this.state.theme,
@@ -60,7 +66,7 @@ class Provider extends Component {
         colors: ((this.state.theme === 'dark' && colors.dark) || (this.state.theme === 'light' && colors.light)),
         sizes
       }}>
-        {this.props.children}
+        {childrenWithKey}
       </ThemeContext.Provider>
     )
   }
