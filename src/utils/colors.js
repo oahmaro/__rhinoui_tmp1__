@@ -38,15 +38,15 @@ export const colors = {
       error: ''
     },
     ui: {
-      fill1: 'white',
-      fill2: 'white',
-      fill3: 'white',
-      fill4: 'white',
-      fill5: 'white',
-      fill6: 'white',
-      fill7: 'white',
-      fill8: 'white',
-      fill9: 'white'
+      fill1: '#0B303D',
+      fill2: '#E9EEF0',
+      fill3: '#BECDD3',
+      fill4: '#A8BDC4',
+      fill5: '#92ADB6',
+      fill6: '#7D9CA7',
+      fill7: '#678C99',
+      fill8: '#517C8A',
+      fill9: '#3C6B7C'
     }
   }
 }

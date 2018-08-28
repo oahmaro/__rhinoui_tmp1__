@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { colors } from '../../utils/colors'
 import { sizes } from '../../utils/sizes'
 import { ThemeContext } from '../../utils/contextProviders'
+import './fonts.css'
 
 class Provider extends Component {
   state = {
@@ -38,7 +39,8 @@ class Provider extends Component {
           direction: 'ltr'
         }
       })
-    } else {
+    }
+    if (locale === 'ar') {
       this.setState({
         language: {
           locale: 'ar',

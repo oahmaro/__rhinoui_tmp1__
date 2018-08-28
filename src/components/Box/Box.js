@@ -53,7 +53,7 @@ const Box = ({
   marginLeft,
   zIndex
 }) => {
-  const flexMap = {
+  const propMap = {
     start: 'flex-start',
     end: 'flex-end',
     center: 'center',
@@ -69,18 +69,18 @@ const Box = ({
 
   const _color = Color(shadowColor)
   const styles = {
-    bar: {
+    base: {
       display: `${display}`,
       position: `${position}`,
       top: top && 0,
       right: right && 0,
       bottom: bottom && 0,
       left: left && 0,
-      flex: `${flexMap[flex]}`,
+      flex: `${propMap[flex]}`,
       flexWrap: `${wrap}`,
-      justifyContent: `${flexMap[justifyContent]}`,
-      alignItems: `${flexMap[alignItems]}`,
-      alignContent: `${flexMap[alignContent]}`,
+      justifyContent: `${propMap[justifyContent]}`,
+      alignItems: `${propMap[alignItems]}`,
+      alignContent: `${propMap[alignContent]}`,
       boxSizing: 'border-box',
       width: (typeof (width) === 'number' && `${width}px`) || ((typeof (width) === 'string' && `${width}`)),
       height: `${height}px`,
@@ -88,7 +88,7 @@ const Box = ({
       maxWidth: `${maxWidth}px`,
       minHeight: `${minHeight}px`,
       minWidth: `${minWidth}px`,
-      background: color ? `${color}` : 'black',
+      background: `${color}`,
       overflowX: overflow === 'scrollX' && 'scroll',
       overflowY: overflow === 'scrollY' && 'scroll',
       overflow: `${overflow}`,
@@ -101,7 +101,8 @@ const Box = ({
       marginRight: (margin && `${margin}px`) || (marginX && `${marginX}px`) || (marginRight && `${marginRight}px`),
       marginBottom: (margin && `${margin}px`) || (marginY && `${marginY}px`) || (marginBottom && `${marginBottom}px`),
       marginLeft: (margin && `${margin}px`) || (marginX && `${marginX}px`) || (marginLeft && `${marginLeft}px`),
-      zIndex: `${zIndex}`
+      zIndex: `${zIndex}`,
+      boxShadow: `${shadowX}px ${shadowY}px ${shadowRadius}px rgba(${_color.red()}, ${_color.green()}, ${_color.blue()}, ${_color.alpha() * shadowOpacity})`
     }
   }
 
@@ -112,24 +113,23 @@ const Box = ({
           if (value) {
             const { colors, language } = value
             const theme = {
-              background: color ? `${colors.ui[color]}` : 'black',
-              flexDirection: language.direction === 'ltr' ? 'row' : 'row-reverse',
+              background: colors.ui[color] ? `${colors.ui[color]}` : `${color}`,
+              flexDirection: (language.direction === 'ltr' && 'row') || (language.direction === 'rtl' && 'row-reverse'),
               borderTop: borderWidth ? `${borderWidth}px solid ${colors.ui.fill1}` : `${borderTop}px solid ${colors.ui.fill1}`,
               borderRight: borderWidth ? `${borderWidth}px solid ${colors.ui.fill1}` : `${borderRight}px solid ${colors.ui.fill1}`,
               borderBottom: borderWidth ? `${borderWidth}px solid ${colors.ui.fill1}` : `${borderBottom}px solid ${colors.ui.fill1}`,
-              borderLeft: borderWidth ? `${borderWidth}px solid ${colors.ui.fill1}` : `${borderLeft}px solid ${colors.ui.fill1}`,
-              boxShadow: `${shadowX}px ${shadowY}px ${shadowRadius}px rgba(${_color.red()}, ${_color.green()}, ${_color.blue()}, ${_color.alpha() * shadowOpacity})`
+              borderLeft: borderWidth ? `${borderWidth}px solid ${colors.ui.fill1}` : `${borderLeft}px solid ${colors.ui.fill1}`
             }
-            const styledPanel = [styles.bar, theme, style]
+            const styledBox = [styles.base, theme, style]
             return (
-              <div style={styledPanel}>
+              <div style={styledBox}>
                 { children }
               </div>
             )
           } else {
-            const styledPanel = [styles.bar, style]
+            const styledBox = [styles.base, style]
             return (
-              <div style={styledPanel}>
+              <div style={styledBox}>
                 { children }
               </div>
             )
@@ -153,7 +153,10 @@ Box.propTypes = {
   maxWidth: PropTypes.number,
   minHeight: PropTypes.number,
   minWidth: PropTypes.number,
-  color: PropTypes.oneOf(['fill1', 'fill2', 'fill3', 'fill4', 'fill5', 'fill6', 'fill7', 'fill8', 'fill9']),
+  color: PropTypes.oneOfType([
+    PropTypes.oneOf(['fill1', 'fill2', 'fill3', 'fill4', 'fill5', 'fill6', 'fill7', 'fill8', 'fill9']),
+    PropTypes.string
+  ]),
   style: PropTypes.object,
   children: PropTypes.node,
   wrap: PropTypes.oneOf(['nowrap', 'wrap', 'wrap-reverse']),
@@ -206,11 +209,13 @@ Box.defaultProps = {
   flex: 'shrink',
   position: 'static',
   overflow: 'visible',
+  shadowColor: 'black',
   shadowX: 0,
   shadowY: 0,
   shadowRadius: 0,
   shadowOpacity: 1,
   borderWidth: 0,
+  color: 'black',
   zIndex: 1
 }
 
