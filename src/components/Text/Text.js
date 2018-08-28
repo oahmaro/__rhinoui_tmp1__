@@ -19,7 +19,11 @@ const Text = ({
   shadowRadius,
   selectable,
   size,
-  overflow
+  overflow,
+  lineHeight,
+  link,
+  href,
+  onClick
 }) => {
   const propMap = {
     xs: '12',
@@ -36,6 +40,8 @@ const Text = ({
   const styles = {
     base: {
       display: inline ? 'inline' : 'block',
+      boxSizing: 'border-box',
+      lineHeight: `${lineHeight}px`,
       fontFamily: 'Roboto, sans-serif',
       fontSize: (typeof size === 'string' && `${propMap[size]}px`) || (typeof size === 'number' && `${size}px`),
       overflow: 'hidden',
@@ -48,6 +54,7 @@ const Text = ({
       color: `${color}`,
       width: inline ? 'auto' : '100%',
       userSelect: selectable ? 'auto' : 'none',
+      textDecoration: 'none',
       textShadow: `${shadowX}px ${shadowY}px ${shadowRadius}px rgba(${_color.red()}, ${_color.green()}, ${_color.blue()}, ${_color.alpha() * shadowOpacity})`
     }
   }
@@ -64,11 +71,29 @@ const Text = ({
               color: colors.text[color] ? `${colors.text[color]}` : `${color}`
             }
             const styledText = [styles.base, theme, style]
-            return (
-              <Tag style={styledText}>
-                { children }
-              </Tag>
-            )
+            if (!link) {
+              return (
+                <Tag style={styledText}>
+                  { children }
+                </Tag>
+              )
+            } else {
+              const stateColor = Color(colors.text[color] ? `${colors.text[color]}` : `${color}`)
+              const link = {
+                cursor: 'pointer',
+                ':hover': {
+                  color: stateColor.lighten(0.35).rgb().string()
+                },
+                ':active': {
+                  color: stateColor.darken(0.25).rgb().string()
+                }
+              }
+              return (
+                <a onClick={onClick} style={[...styledText, link]} href={href}>
+                  { children }
+                </a>
+              )
+            }
           } else {
             const styledText = [styles.base, style]
             return (
@@ -104,7 +129,11 @@ Text.propTypes = {
     PropTypes.oneOf(['xs', 'sm', 'md', 'lg', 'xl']),
     PropTypes.number
   ]),
-  overflow: PropTypes.oneOf(['normal', 'break', 'ellipsis'])
+  overflow: PropTypes.oneOf(['normal', 'break', 'ellipsis']),
+  lineHeight: PropTypes.number,
+  link: PropTypes.bool,
+  href: PropTypes.string,
+  onClick: PropTypes.func
 }
 
 Text.defaultProps = {
