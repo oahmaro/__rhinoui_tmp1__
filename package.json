@@ -59,6 +59,7 @@
   ],
   "dependencies": {
     "color": "^3.0.0",
-    "radium": "^0.24.1"
+    "radium": "^0.24.1",
+    "react-jss": "^8.6.1"
   }
 }

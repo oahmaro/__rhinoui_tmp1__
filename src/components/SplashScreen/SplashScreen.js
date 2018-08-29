@@ -1,222 +1,123 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Raduim from 'radium'
-import * as colors from '../../utils/colors'
-import * as sizes from '../../utils/sizes'
-import Color from 'color'
+import Radium from 'radium'
+import { ThemeContext } from '../../utils/contextProviders'
+import Box from '../Box'
+import Text from '../Text'
 
-function SplashScreen(props) {
-  const color = Color(props.shadowColor)
+const SplashScreen = ({
+  style,
+  title,
+  size,
+  center,
+  borderRadius,
+  subTitle,
+  titleSize,
+  subTitleSize,
+  titleMargin,
+  subTitleMargin,
+  translation
+}) => {
   const styles = {
     container: {
       base: {
-        width: `${props.size}`
-      },
-      dark: {
-
-      },
-      light: {
 
       },
       state: {
         center: {
           position: 'absolute',
+          transform: 'translate(-50%, -50%)',
           top: '50%',
-          left: '50%',
-          transform: 'translate(-50%, -50%)'
+          left: '50%'
         }
-      }
-    },
-    img: {
-      base: {
-        borderColor: `${props.borderColor}`,
-        borderWidth: `${props.borderWidth}px`,
-        boxShadow: `${props.shadowOffset.width}px ${props.shadowOffset.height}px ${props.shadowRadius}px rgba(${color.red()}, ${color.green()}, ${color.blue()}, ${color.alpha() * props.shadowOpacity})`,
-        userSelect: 'none',
-        width: `${props.size}px`
-      },
-      dark: {
-        borderColor: colors.keyColor
-      },
-      light: {
-
-      },
-      state: {
-
-      }
-    },
-    placeholder: {
-      base: {
-        display: 'table-cell',
-        verticalAlign: 'middle',
-        textAlign: 'center',
-        width: `${props.size}px`,
-        height: `${props.size}px`,
-        borderRadius: `${props.borderRadius}px`,
-        border: `${props.borderWidth}px solid ${props.borderColor}`,
-        boxShadow: `${props.shadowOffset.width}px ${props.shadowOffset.height}px ${props.shadowRadius}px rgba(${color.red()}, ${color.green()}, ${color.blue()}, ${color.alpha() * props.shadowOpacity})`
-      },
-      dark: {
-        background: colors.grey2,
-        border: `${props.borderWidth}px solid ${colors.black5}`
-      },
-      light: {
-
-      },
-      state: {
-
-      }
-    },
-    placeholderText: {
-      base: {
-        userSelect: 'none',
-        fontSize: `${sizes.s3}px`
-      },
-      dark: {
-        color: colors.white3
-      },
-      light: {
-
-      },
-      state: {
-
-      }
-    },
-    title: {
-      base: {
-        display: 'block',
-        marginLeft: 0,
-        marginRight: 0,
-        marginTop: `${props.titleMarginTop}px`,
-        marginBottom: `${props.titleMarginBottom}px`,
-        width: `${props.size}px`,
-        color: props.titleColor,
-        fontColor: `${props.titleColor}`,
-        textAlign: 'center',
-        fontSize: `${props.titleFontSize}px`,
-        fontFamily: `${props.fontFamily}`,
-        userSelect: 'none'
-      },
-      dark: {
-        color: colors.white3
-      },
-      light: {
-
-      },
-      state: {
-
-      }
-    },
-    link: {
-      base: {
-        display: 'block',
-        marginLeft: 0,
-        marginRight: 0,
-        marginTop: `${props.linkMarginTop}px`,
-        marginBottom: `${props.linkMarginBottom}px`,
-        width: `${props.size}px`,
-        color: `${props.linkColor}`,
-        textAlign: 'center',
-        fontSize: `${props.linkFontSize}px`,
-        fontFamily: `${props.fontFamily}`,
-        cursor: 'pointer',
-        userSelect: 'none'
-      },
-      dark: {
-        color: colors.keyColor
-      },
-      light: {
-
-      },
-      state: {
-
       }
     }
   }
 
-  const { container, img, placeholder, placeholderText, title, link } = styles
-
-  const containerTheme = (props.dark && container.dark) || (props.light && container.light)
-  const imgTheme = (props.dark && img.dark) || (props.light && img.light)
-  const placeholderTheme = (props.dark && placeholder.dark) || (props.light && placeholder.light)
-  const placeholderTextTheme = (props.dark && placeholderText.dark) || (props.light && placeholderText.light)
-  const titleTheme = (props.dark && title.dark) || (props.light && title.light)
-  const linkTheme = (props.dark && link.dark) || (props.light && link.light)
-  const containerCenter = props.center && container.state.center
-
+  const centerStyles = center && styles.container.state.center
   return (
-    <div style={[props.style, container.base, containerCenter, containerTheme]}>
+    <ThemeContext.Consumer>
       {
-        props.img
-          ? (
-            <img
-              style={[img.base, imgTheme]}
-              width={props.size}
-              height={props.size}
-              src={props.img}
-              alt='splash-screen'
-              draggable={false}
-            />
-          )
-          : (
-            <div style={[placeholder.base, placeholderTheme]}>
-              <p style={[placeholderText.base, placeholderTextTheme]}>No Image</p>
-            </div>
-          )
+        (value) => {
+          if (value) {
+            const { colors } = value
+            const styledContainer = [styles.container.base, style, centerStyles]
+            return (
+              <Box style={styledContainer} flexDirection='column' alignItems='center'>
+                <Box
+                  color={colors.ui.fill7}
+                  width={size}
+                  height={size}
+                  borderRadius={`${borderRadius}px ${borderRadius}px ${borderRadius}px ${borderRadius}px`}>
+                  <Text
+                    color={colors.text.disabled}
+                    align='center'
+                    size='md'
+                    lineHeight={size}
+                    translation={translation ? translation.placeholder : ''}>
+                    No Image
+                  </Text>
+                </Box>
+                <Text
+                  color={colors.text.secondary}
+                  align='center'
+                  marginTop={titleMargin}
+                  size={titleSize}
+                  translation={translation ? translation.title : ''}>
+                  {title}
+                </Text>
+                <Text
+                  color={colors.state.key}
+                  align='center'
+                  marginTop={subTitleMargin}
+                  size={subTitleSize}
+                  link
+                  translation={translation ? translation.subTitle : ''}>
+                  {subTitle}
+                </Text>
+              </Box>
+            )
+          } else {
+            const styledContainer = [styles.container.base, style, centerStyles]
+            return (
+              <div style={styledContainer}>
+                ''
+              </div>
+            )
+          }
+        }
       }
-
-      <p style={[title.base, titleTheme]}>{props.title}</p>
-
-      <a
-        style={[link.base, linkTheme]}
-        onClick={props.onClick}>{props.link}</a>
-    </div>
+    </ThemeContext.Consumer>
   )
 }
 
 SplashScreen.propTypes = {
-  title: PropTypes.string,
-  img: PropTypes.string,
-  link: PropTypes.string,
-  size: PropTypes.number,
   style: PropTypes.object,
-  borderRadius: PropTypes.number,
-  light: PropTypes.bool,
-  dark: PropTypes.bool,
-  borderWidth: PropTypes.number,
-  borderColor: PropTypes.string,
-  titleColor: PropTypes.string,
-  linkColor: PropTypes.string,
-  onClick: PropTypes.func,
-  titleFontSize: PropTypes.number,
-  linkFontSize: PropTypes.number,
-  fontFamily: PropTypes.string,
+  title: PropTypes.string,
+  subTitle: PropTypes.string,
+  size: PropTypes.number,
   center: PropTypes.bool,
-  titleMarginTop: PropTypes.number,
-  titleMarginBottom: PropTypes.number,
-  linkMarginTop: PropTypes.number,
-  linkMarginBottom: PropTypes.number,
-  shadowColor: PropTypes.string,
-  shadowOffset: PropTypes.object,
-  shadowOpacity: PropTypes.number,
-  shadowRadius: PropTypes.number
+  borderRadius: PropTypes.number,
+  titleSize: PropTypes.PropTypes.oneOfType([
+    PropTypes.oneOf(['xs', 'sm', 'md', 'lg', 'xl']),
+    PropTypes.number
+  ]),
+  subTitleSize: PropTypes.PropTypes.oneOfType([
+    PropTypes.oneOf(['xs', 'sm', 'md', 'lg', 'xl']),
+    PropTypes.number
+  ]),
+  titleMargin: PropTypes.number,
+  subTitleMargin: PropTypes.number,
+  translation: PropTypes.object
 }
 
 SplashScreen.defaultProps = {
-  title: 'Create your first record!',
-  link: 'Create new link...',
   size: 200,
-  titleFontSize: sizes.s3,
-  linkFontSize: sizes.s2,
   borderRadius: 12,
-  borderWidth: 1,
-  fontFamily: 'roboto',
-  titleMarginTop: 10,
-  linkMarginTop: 10,
-  shadowColor: 'rgb(0, 0, 0)',
-  shadowOffset: {width: 0, height: 0},
-  shadowOpacity: 1,
-  shadowRadius: 0
+  titleSize: 'md',
+  subTitleSize: 'xs',
+  titleMargin: 10,
+  subTitleMargin: 10
 }
 
-export default Raduim(SplashScreen)
+export default Radium(SplashScreen)

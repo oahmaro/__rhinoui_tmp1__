@@ -89,7 +89,7 @@ function AppSelector(props) {
       <a
         style={styledAppTitle}
         onClick={onAppTitleClick}>
-        {props.data.apps[props.data.selectedApp].title}
+        {props.data.apps[props.data.selectedApp].title.english}
       </a>
       <div style={menusContainer.base}>
         {
@@ -99,7 +99,7 @@ function AppSelector(props) {
                 key={menu}
                 style={styledMenu}
                 onClick={() => onMenuClick(menu)}>
-                {contacts.menus[menu].title}
+                {contacts.menus[menu].title.english}
               </a>
             )
           })
@@ -125,11 +125,17 @@ AppSelector.defaultProps = {
     selectedApp: 'contacts',
     apps: {
       contacts: {
-        title: 'Contacts',
+        title: {
+          english: 'Contacts',
+          arabic: 'جهات الاتصال'
+        },
         icon: './contacts.png',
         menus: {
           configuration: {
-            title: 'Configuration',
+            title: {
+              english: 'Configuration',
+              arabic: 'ترتيب'
+            },
             menuItems: {
               contactTags: {
                 title: 'Contact Tags'

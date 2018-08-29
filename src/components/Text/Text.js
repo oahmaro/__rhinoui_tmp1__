@@ -23,7 +23,22 @@ const Text = ({
   lineHeight,
   link,
   href,
-  onClick
+  onClick,
+  padding,
+  paddingX,
+  paddingY,
+  paddingTop,
+  paddingRight,
+  paddingBottom,
+  paddingLeft,
+  margin,
+  marginX,
+  marginY,
+  marginTop,
+  marginRight,
+  marginBottom,
+  marginLeft,
+  translation
 }) => {
   const propMap = {
     xs: '12',
@@ -55,7 +70,15 @@ const Text = ({
       width: inline ? 'auto' : '100%',
       userSelect: selectable ? 'auto' : 'none',
       textDecoration: 'none',
-      textShadow: `${shadowX}px ${shadowY}px ${shadowRadius}px rgba(${_color.red()}, ${_color.green()}, ${_color.blue()}, ${_color.alpha() * shadowOpacity})`
+      paddingTop: (padding && `${padding}px`) || (paddingY && `${paddingY}px`) || (paddingTop && `${paddingTop}px`),
+      paddingRight: (padding && `${padding}px`) || (paddingX && `${paddingX}px`) || (paddingRight && `${paddingRight}px`),
+      paddingBottom: (padding && `${padding}px`) || (paddingY && `${paddingY}px`) || (paddingBottom && `${paddingBottom}px`),
+      paddingLeft: (padding && `${padding}px`) || (paddingX && `${paddingX}px`) || (paddingLeft && `${paddingLeft}px`),
+      marginTop: (margin && `${margin}px`) || (marginY && `${marginY}px`) || (marginTop && `${marginTop}px`),
+      marginRight: (margin && `${margin}px`) || (marginX && `${marginX}px`) || (marginRight && `${marginRight}px`),
+      marginBottom: (margin && `${margin}px`) || (marginY && `${marginY}px`) || (marginBottom && `${marginBottom}px`),
+      marginLeft: (margin && `${margin}px`) || (marginX && `${marginX}px`) || (marginLeft && `${marginLeft}px`),
+      textShadow: (shadowX || shadowY) ? `${shadowX}px ${shadowY}px ${shadowRadius}px rgba(${_color.red()}, ${_color.green()}, ${_color.blue()}, ${_color.alpha() * shadowOpacity})` : ''
     }
   }
 
@@ -65,16 +88,18 @@ const Text = ({
         (value) => {
           const Tag = inline ? 'span' : 'div'
           if (value) {
-            const { colors, language } = value
+            const { colors, language, sizes } = value
             const theme = {
-              fontFamily: (language.locale === 'en' && 'Roboto, Noto Kufi Arabic, sans-serif') || (language.locale === 'ar' && 'Noto Kufi Arabic, Roboto, sans-serif'),
-              color: colors.text[color] ? `${colors.text[color]}` : `${color}`
+              fontFamily: language.fonts,
+              color: colors.text[color] ? `${colors.text[color]}` : `${color}`,
+              direction: language.direction,
+              fontSize: (typeof size === 'string' && `${sizes[size]}`) || (typeof size === 'number' && `${size}px`)
             }
             const styledText = [styles.base, theme, style]
             if (!link) {
               return (
                 <Tag style={styledText}>
-                  { children }
+                  { (language.locale === 'en' && children) || (language.locale === 'ar' && translation) }
                 </Tag>
               )
             } else {
@@ -90,7 +115,7 @@ const Text = ({
               }
               return (
                 <a onClick={onClick} style={[...styledText, link]} href={href}>
-                  { children }
+                  { (language.locale === 'en' && children) || (language.locale === 'ar' && translation) }
                 </a>
               )
             }
@@ -133,7 +158,22 @@ Text.propTypes = {
   lineHeight: PropTypes.number,
   link: PropTypes.bool,
   href: PropTypes.string,
-  onClick: PropTypes.func
+  onClick: PropTypes.func,
+  padding: PropTypes.number,
+  paddingX: PropTypes.number,
+  paddingY: PropTypes.number,
+  paddingTop: PropTypes.number,
+  paddingRight: PropTypes.number,
+  paddingBottom: PropTypes.number,
+  paddingLeft: PropTypes.number,
+  margin: PropTypes.number,
+  marginX: PropTypes.number,
+  marginY: PropTypes.number,
+  marginTop: PropTypes.number,
+  marginRight: PropTypes.number,
+  marginBottom: PropTypes.number,
+  marginLeft: PropTypes.number,
+  translation: PropTypes.string
 }
 
 Text.defaultProps = {

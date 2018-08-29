@@ -11,7 +11,8 @@ class Provider extends Component {
     setTheme: this.setTheme,
     language: {
       locale: 'en',
-      direction: 'ltr'
+      direction: 'ltr',
+      fonts: 'Roboto, Noto Kufi Arabic, sans-serif'
     },
     setLanguage: this.setLanguage
   }
@@ -36,7 +37,8 @@ class Provider extends Component {
       this.setState({
         language: {
           locale: 'en',
-          direction: 'ltr'
+          direction: 'ltr',
+          fonts: 'Roboto, Noto Kufi Arabic, sans-serif'
         }
       })
     }
@@ -44,12 +46,12 @@ class Provider extends Component {
       this.setState({
         language: {
           locale: 'ar',
-          direction: 'rtl'
+          direction: 'rtl',
+          fonts: 'Noto Kufi Arabic, Roboto, sans-serif'
         }
       })
     }
   }
-
   render() {
     const ID = () => '_' + Math.random().toString(36).substr(2, 9)
     const childrenWithKey = React.Children.map(this.props.children, child => {
@@ -64,7 +66,7 @@ class Provider extends Component {
         language: this.state.language,
         setLanguage: this.state.setLanguage,
         colors: ((this.state.theme === 'dark' && colors.dark) || (this.state.theme === 'light' && colors.light)),
-        sizes
+        sizes: ((this.state.language.locale === 'en' && sizes.english) || (this.state.language.locale === 'ar' && sizes.arabic))
       }}>
         {childrenWithKey}
       </ThemeContext.Provider>

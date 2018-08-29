@@ -51,7 +51,9 @@ const Box = ({
   marginRight,
   marginBottom,
   marginLeft,
-  zIndex
+  zIndex,
+  id,
+  flexDirection
 }) => {
   const propMap = {
     start: 'flex-start',
@@ -72,11 +74,12 @@ const Box = ({
     base: {
       display: `${display}`,
       position: `${position}`,
-      top: top && 0,
-      right: right && 0,
-      bottom: bottom && 0,
-      left: left && 0,
+      top: typeof top === 'boolean' ? top && 0 : `${top}`,
+      right: typeof right === 'boolean' ? right && 0 : `${right}`,
+      bottom: typeof bottom === 'boolean' ? bottom && 0 : `${bottom}`,
+      left: typeof left === 'boolean' ? left && 0 : `${left}`,
       flex: `${propMap[flex]}`,
+      flexDirection: `${flexDirection}`,
       flexWrap: `${wrap}`,
       justifyContent: `${propMap[justifyContent]}`,
       alignItems: `${propMap[alignItems]}`,
@@ -114,22 +117,22 @@ const Box = ({
             const { colors, language } = value
             const theme = {
               background: colors.ui[color] ? `${colors.ui[color]}` : `${color}`,
-              flexDirection: (language.direction === 'ltr' && 'row') || (language.direction === 'rtl' && 'row-reverse'),
-              borderTop: borderWidth ? `${borderWidth}px solid ${colors.ui.fill1}` : `${borderTop}px solid ${colors.ui.fill1}`,
-              borderRight: borderWidth ? `${borderWidth}px solid ${colors.ui.fill1}` : `${borderRight}px solid ${colors.ui.fill1}`,
-              borderBottom: borderWidth ? `${borderWidth}px solid ${colors.ui.fill1}` : `${borderBottom}px solid ${colors.ui.fill1}`,
-              borderLeft: borderWidth ? `${borderWidth}px solid ${colors.ui.fill1}` : `${borderLeft}px solid ${colors.ui.fill1}`
+              flexDirection: flexDirection === 'row' ? ((language.direction === 'ltr' && 'row') || (language.direction === 'rtl' && 'row-reverse')) : 'column',
+              borderTop: borderWidth ? `${borderWidth}px solid ${colors.ui.fill2}` : `${borderTop}px solid ${colors.ui.fill2}`,
+              borderRight: borderWidth ? `${borderWidth}px solid ${colors.ui.fill2}` : `${borderRight}px solid ${colors.ui.fill2}`,
+              borderBottom: borderWidth ? `${borderWidth}px solid ${colors.ui.fill2}` : `${borderBottom}px solid ${colors.ui.fill2}`,
+              borderLeft: borderWidth ? `${borderWidth}px solid ${colors.ui.fill2}` : `${borderLeft}px solid ${colors.ui.fill2}`
             }
             const styledBox = [styles.base, theme, style]
             return (
-              <div style={styledBox}>
+              <div id={id} style={styledBox}>
                 { children }
               </div>
             )
           } else {
             const styledBox = [styles.base, style]
             return (
-              <div style={styledBox}>
+              <div id={id} style={styledBox}>
                 { children }
               </div>
             )
@@ -166,10 +169,22 @@ Box.propTypes = {
   alignContent: PropTypes.oneOf(['start', 'end', 'center', 'stretch', 'between', 'around']),
   flex: PropTypes.oneOf(['grow', 'shrink', 'none']),
   position: PropTypes.oneOf(['static', 'relative', 'fixed', 'absolute']),
-  top: PropTypes.bool,
-  right: PropTypes.bool,
-  bottom: PropTypes.bool,
-  left: PropTypes.bool,
+  top: PropTypes.oneOfType([
+    PropTypes.bool,
+    PropTypes.string
+  ]),
+  right: PropTypes.oneOfType([
+    PropTypes.bool,
+    PropTypes.string
+  ]),
+  bottom: PropTypes.oneOfType([
+    PropTypes.bool,
+    PropTypes.string
+  ]),
+  left: PropTypes.oneOfType([
+    PropTypes.bool,
+    PropTypes.string
+  ]),
   overflow: PropTypes.oneOf(['visible', 'hidden', 'scroll', 'scrollX', 'scrollY', 'auto']),
   borderWidth: PropTypes.number,
   borderTop: PropTypes.number,
@@ -196,11 +211,13 @@ Box.propTypes = {
   marginRight: PropTypes.number,
   marginBottom: PropTypes.number,
   marginLeft: PropTypes.number,
-  zIndex: PropTypes.number
+  zIndex: PropTypes.number,
+  id: PropTypes.string,
+  flexDirection: PropTypes.oneOf(['column', 'column-reverse', 'row', 'row-reverse'])
 }
 
 Box.defaultProps = {
-  height: 36,
+  height: 'auto',
   wrap: 'nowrap',
   display: 'flex',
   justifyContent: 'start',
@@ -215,8 +232,8 @@ Box.defaultProps = {
   shadowRadius: 0,
   shadowOpacity: 1,
   borderWidth: 0,
-  color: 'black',
-  zIndex: 1
+  zIndex: 1,
+  flexDirection: 'row'
 }
 
 export default Radium(Box)
